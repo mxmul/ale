@@ -8,6 +8,7 @@ call ale#Set('javascript_eslint_executable', 'eslint')
 call ale#Set('javascript_eslint_use_global', 0)
 call ale#Set('javascript_eslint_suppress_eslintignore', 0)
 call ale#Set('javascript_eslint_suppress_missing_config', 0)
+call ale#Set('javascript_eslint_config_path', '.eslintrc.js')
 
 function! ale#handlers#eslint#FindConfig(buffer) abort
     for l:path in ale#path#Upwards(expand('#' . a:buffer . ':p:h'))
@@ -17,6 +18,7 @@ function! ale#handlers#eslint#FindConfig(buffer) abort
         \   '.eslintrc.yml',
         \   '.eslintrc.json',
         \   '.eslintrc',
+        \   ale#Var(a:buffer, 'javascript_eslint_config_path')
         \]
             let l:config = ale#path#Simplify(join([l:path, l:basename], s:sep))
 
