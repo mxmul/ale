@@ -44,8 +44,11 @@ function! ale#handlers#eslint#GetCommand(buffer) abort
 
     let l:options = ale#Var(a:buffer, 'javascript_eslint_options')
 
+    let l:config = ale#handlers#eslint#FindConfig(a:buffer)
+
     return ale#node#Executable(a:buffer, l:executable)
     \   . (!empty(l:options) ? ' ' . l:options : '')
+    \   . (!empty(l:config) ? ' --config ' . l:config : '')
     \   . ' -f unix --stdin --stdin-filename %s'
 endfunction
 
